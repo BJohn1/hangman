@@ -119,14 +119,70 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"js/main.js":[function(require,module,exports) {
 var y = document.querySelector(".myBtn");
+var word = prompt("Enter a word");
+var wordsplit = word.split("");
 var guessed = [];
 var guessesLeft = 7;
 y.addEventListener("click", function () {
   if (document.querySelector('input').value.length == 1 && guessed.includes(document.querySelector('input').value) !== true) {
     guessed.push(document.querySelector('input').value);
+
+    if (wordsplit.includes(guessed[guessed.length - 1])) {
+      alert('nice');
+    } else {
+      guessesLeft -= 1;
+      changeImage();
+
+      if (guessesLeft > 0) {
+        alert('WRONG. Guesses Left: ' + guessesLeft);
+      } else if (guessesLeft === 0) {
+        alert('Game Over');
+        location.reload();
+      }
+    }
+
     alert("You guessed " + document.querySelector('input').value + " USED LETTERS: " + guessed);
   } else alert("try again");
-});
+}); // alerts and button and game play^^^^
+
+var image = document.createElement("img");
+image.id = "id";
+image.className = "class";
+image.src = "https://www.oligalma.com/downloads/images/hangman/hangman/0.jpg";
+image.alt = "Body";
+image.height = "500";
+image.width = "500";
+document.querySelector("body").appendChild(image);
+
+function changeImage() {
+  if (guessesLeft === 6) {
+    image.src = "https://www.oligalma.com/downloads/images/hangman/hangman/4.jpg";
+  }
+
+  if (guessesLeft === 5) {
+    image.src = "https://www.oligalma.com/downloads/images/hangman/hangman/5.jpg";
+  }
+
+  if (guessesLeft === 4) {
+    image.src = "https://www.oligalma.com/downloads/images/hangman/hangman/6.jpg";
+  }
+
+  if (guessesLeft === 3) {
+    image.src = "https://www.oligalma.com/downloads/images/hangman/hangman/7.jpg";
+  }
+
+  if (guessesLeft === 2) {
+    image.src = "https://www.oligalma.com/downloads/images/hangman/hangman/8.jpg";
+  }
+
+  if (guessesLeft === 1) {
+    image.src = "https://www.oligalma.com/downloads/images/hangman/hangman/9.jpg";
+  }
+
+  if (guessesLeft === 0) {
+    image.src = "https://www.oligalma.com/downloads/images/hangman/hangman/10.jpg";
+  }
+} //changes hangman image^^^^
 },{}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -155,7 +211,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62399" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64928" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

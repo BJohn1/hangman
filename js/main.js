@@ -1,21 +1,31 @@
 var y = document.querySelector(".myBtn");
-let word = prompt("Enter a word");
+let word = prompt("Enter a word to start a new game");
 let wordsplit = word.split("")
 const guessed = []
+const correct = []
+let right = 0
 let guessesLeft = 7;
 
 y.addEventListener("click", function(){
     if(document.querySelector('input').value.length==1 && guessed.includes(document.querySelector('input').value) !== true){
     guessed.push(document.querySelector('input').value)
     if(wordsplit.includes(guessed[guessed.length-1])){
-        alert('nice')
-    }else{ 
+        correct.push(guessed[guessed.length-1])
+        right += 1
+        if(right===wordsplit.length){
+        alert('NICE. You beat the game! Answer: '+word)
+        location.reload()
+        }
+        else alert('NICE. Correct Letters: ' + correct)
+    }else{
         guessesLeft-=1
-        changeImage()
         if(guessesLeft>0){
+        changeImage() 
+        document.querySelector(".guesses").innerText = "Guesses Remaining: "+guessesLeft
         alert('WRONG. Guesses Left: '+guessesLeft)
         }
         else if(guessesLeft===0){
+            changeImage()
             alert('Game Over')
             location.reload()
         }
@@ -25,6 +35,8 @@ y.addEventListener("click", function(){
     else alert("try again")
   });
 // alerts and button and game play^^^^
+
+
   var image = document.createElement("img");
   image.id = "id";
   image.className = "class";

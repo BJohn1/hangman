@@ -119,23 +119,33 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"js/main.js":[function(require,module,exports) {
 var y = document.querySelector(".myBtn");
-var word = prompt("Enter a word");
+var word = prompt("Enter a word to start a new game");
 var wordsplit = word.split("");
 var guessed = [];
+var correct = [];
+var right = 0;
 var guessesLeft = 7;
 y.addEventListener("click", function () {
   if (document.querySelector('input').value.length == 1 && guessed.includes(document.querySelector('input').value) !== true) {
     guessed.push(document.querySelector('input').value);
 
     if (wordsplit.includes(guessed[guessed.length - 1])) {
-      alert('nice');
+      correct.push(guessed[guessed.length - 1]);
+      right += 1;
+
+      if (right === wordsplit.length) {
+        alert('NICE. You beat the game! Answer: ' + word);
+        location.reload();
+      } else alert('NICE. Correct Letters: ' + correct);
     } else {
       guessesLeft -= 1;
-      changeImage();
 
       if (guessesLeft > 0) {
+        changeImage();
+        document.querySelector(".guesses").innerText = "Guesses Remaining: " + guessesLeft;
         alert('WRONG. Guesses Left: ' + guessesLeft);
       } else if (guessesLeft === 0) {
+        changeImage();
         alert('Game Over');
         location.reload();
       }
@@ -211,7 +221,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64928" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53422" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

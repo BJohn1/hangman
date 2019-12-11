@@ -119,12 +119,29 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"js/main.js":[function(require,module,exports) {
 var y = document.querySelector(".myBtn");
-var word = prompt("Enter a word to start a new game");
+var z = document.querySelector(".restart");
+var word = prompt("Enter a word to start a new game.(all lowercase please)");
 var wordsplit = word.split("");
 var guessed = [];
 var correct = [];
 var right = 0;
 var guessesLeft = 7;
+var num = wordsplit.length;
+var blanks = document.createElement("h4");
+var used = document.createElement("h5");
+var text = [];
+document.querySelector("Header").appendChild(used);
+document.querySelector("Header").appendChild(blanks);
+
+function putBlanks() {
+  for (i = 0; i < num; i++) {
+    text.push("_");
+  }
+
+  blanks.innerText = text.join(' ');
+}
+
+putBlanks();
 y.addEventListener("click", function () {
   if (document.querySelector('input').value.length == 1 && guessed.includes(document.querySelector('input').value) !== true) {
     guessed.push(document.querySelector('input').value);
@@ -132,6 +149,12 @@ y.addEventListener("click", function () {
     if (wordsplit.includes(guessed[guessed.length - 1])) {
       correct.push(guessed[guessed.length - 1]);
       right += 1;
+      var a = wordsplit.indexOf(guessed[guessed.length - 1]);
+      text[a] = guessed[guessed.length - 1]; //update blanks
+
+      document.querySelector("h4").innerText = text.join(' '); //update blanks
+
+      document.querySelector("h5").innerText = "Used Letters: " + guessed.join(',');
 
       if (right === wordsplit.length) {
         alert('NICE. You beat the game! Answer: ' + word);
@@ -143,6 +166,7 @@ y.addEventListener("click", function () {
       if (guessesLeft > 0) {
         changeImage();
         document.querySelector(".guesses").innerText = "Guesses Remaining: " + guessesLeft;
+        document.querySelector("h5").innerText = "Used Letters: " + guessed.join(',');
         alert('WRONG. Guesses Left: ' + guessesLeft);
       } else if (guessesLeft === 0) {
         changeImage();
@@ -155,6 +179,9 @@ y.addEventListener("click", function () {
   } else alert("try again");
 }); // alerts and button and game play^^^^
 
+z.addEventListener("click", function () {
+  location.reload();
+});
 var image = document.createElement("img");
 image.id = "id";
 image.className = "class";
@@ -221,7 +248,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53422" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59757" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,17 +1,37 @@
 var y = document.querySelector(".myBtn");
-let word = prompt("Enter a word to start a new game");
+var z = document.querySelector(".restart")
+let word = prompt("Enter a word to start a new game.(all lowercase please)");
 let wordsplit = word.split("")
 const guessed = []
 const correct = []
 let right = 0
 let guessesLeft = 7;
 
+let num = wordsplit.length;
+let blanks = document.createElement("h4");
+let used = document.createElement("h5");
+let text = []
+document.querySelector("Header").appendChild(used)
+document.querySelector("Header").appendChild(blanks)
+function putBlanks(){
+  for(i=0; i<num; i++){
+      text.push("_")
+  }
+  blanks.innerText=text.join(' ')
+}
+ 
+
+putBlanks()
 y.addEventListener("click", function(){
     if(document.querySelector('input').value.length==1 && guessed.includes(document.querySelector('input').value) !== true){
     guessed.push(document.querySelector('input').value)
     if(wordsplit.includes(guessed[guessed.length-1])){
         correct.push(guessed[guessed.length-1])
         right += 1
+        var a = wordsplit.indexOf(guessed[guessed.length-1])
+        text[a]= guessed[guessed.length-1]//update blanks
+        document.querySelector("h4").innerText=text.join(' ') //update blanks
+        document.querySelector("h5").innerText="Used Letters: "+guessed.join(',')
         if(right===wordsplit.length){
         alert('NICE. You beat the game! Answer: '+word)
         location.reload()
@@ -22,6 +42,7 @@ y.addEventListener("click", function(){
         if(guessesLeft>0){
         changeImage() 
         document.querySelector(".guesses").innerText = "Guesses Remaining: "+guessesLeft
+        document.querySelector("h5").innerText="Used Letters: "+guessed.join(',')
         alert('WRONG. Guesses Left: '+guessesLeft)
         }
         else if(guessesLeft===0){
@@ -36,6 +57,9 @@ y.addEventListener("click", function(){
   });
 // alerts and button and game play^^^^
 
+z.addEventListener("click",function(){
+    location.reload()
+})
 
   var image = document.createElement("img");
   image.id = "id";
@@ -69,3 +93,4 @@ y.addEventListener("click", function(){
     }
   }
   //changes hangman image^^^^
+  

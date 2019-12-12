@@ -1,6 +1,6 @@
 var y = document.querySelector(".myBtn");
 var z = document.querySelector(".restart")
-let word = prompt("Enter a word to start a new game.(all lowercase please)");
+let word = prompt("Enter a word for someone else to guess! Feel free to give them hints").toUpperCase();
 let wordsplit = word.split("")
 const guessed = []
 const correct = []
@@ -13,26 +13,39 @@ let used = document.createElement("h5");
 let text = []
 document.querySelector("Header").appendChild(used)
 document.querySelector("Header").appendChild(blanks)
+
 function putBlanks(){
   for(i=0; i<num; i++){
       text.push("_")
   }
   blanks.innerText=text.join(' ')
 }
+
+function duplicates(){
+    for(i=0;i<wordsplit.length;i++){
+        if(wordsplit[i]===guessed[guessed.length-1]){
+            text[i]=guessed[guessed.length-1]
+            correct.push(guessed[guessed.length-1])
+        }
+    }
+    document.querySelector("h4").innerText=text.join(' ') //update blanks
+    document.querySelector("h5").innerText="Used Letters: "+guessed.join(',')
+}
  
 
 putBlanks()
 y.addEventListener("click", function(){
-    if(document.querySelector('input').value.length==1 && guessed.includes(document.querySelector('input').value) !== true){
-    guessed.push(document.querySelector('input').value)
+    if(document.querySelector('input').value.toUpperCase().length==1 && guessed.includes(document.querySelector('input').value.toUpperCase()) !== true){
+    guessed.push(document.querySelector('input').value.toUpperCase())
     if(wordsplit.includes(guessed[guessed.length-1])){
-        correct.push(guessed[guessed.length-1])
+        //correct.push(guessed[guessed.length-1])
+        duplicates()
         right += 1
-        var a = wordsplit.indexOf(guessed[guessed.length-1])
-        text[a]= guessed[guessed.length-1]//update blanks
-        document.querySelector("h4").innerText=text.join(' ') //update blanks
-        document.querySelector("h5").innerText="Used Letters: "+guessed.join(',')
-        if(right===wordsplit.length){
+        //var a = wordsplit.indexOf(guessed[guessed.length-1])
+        //text[a]= guessed[guessed.length-1]//update blanks
+        //document.querySelector("h4").innerText=text.join(' ') //update blanks
+       // document.querySelector("h5").innerText="Used Letters: "+guessed.join(',')
+        if(text.includes('_')!==true){
         alert('NICE. You beat the game! Answer: '+word)
         location.reload()
         }
@@ -51,9 +64,9 @@ y.addEventListener("click", function(){
             location.reload()
         }
     }
-    alert("You guessed "+document.querySelector('input').value+" USED LETTERS: "+guessed);
+    alert("You guessed "+document.querySelector('input').value.toUpperCase()+" USED LETTERS: "+guessed);
     }
-    else alert("try again")
+    else alert("TRY AGAIN")
   });
 // alerts and button and game play^^^^
 

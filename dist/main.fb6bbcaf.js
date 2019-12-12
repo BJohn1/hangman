@@ -120,7 +120,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"js/main.js":[function(require,module,exports) {
 var y = document.querySelector(".myBtn");
 var z = document.querySelector(".restart");
-var word = prompt("Enter a word to start a new game.(all lowercase please)");
+var word = prompt("Enter a word for someone else to guess! Feel free to give them hints").toUpperCase();
 var wordsplit = word.split("");
 var guessed = [];
 var correct = [];
@@ -141,22 +141,33 @@ function putBlanks() {
   blanks.innerText = text.join(' ');
 }
 
+function duplicates() {
+  for (i = 0; i < wordsplit.length; i++) {
+    if (wordsplit[i] === guessed[guessed.length - 1]) {
+      text[i] = guessed[guessed.length - 1];
+      correct.push(guessed[guessed.length - 1]);
+    }
+  }
+
+  document.querySelector("h4").innerText = text.join(' '); //update blanks
+
+  document.querySelector("h5").innerText = "Used Letters: " + guessed.join(',');
+}
+
 putBlanks();
 y.addEventListener("click", function () {
-  if (document.querySelector('input').value.length == 1 && guessed.includes(document.querySelector('input').value) !== true) {
-    guessed.push(document.querySelector('input').value);
+  if (document.querySelector('input').value.toUpperCase().length == 1 && guessed.includes(document.querySelector('input').value.toUpperCase()) !== true) {
+    guessed.push(document.querySelector('input').value.toUpperCase());
 
     if (wordsplit.includes(guessed[guessed.length - 1])) {
-      correct.push(guessed[guessed.length - 1]);
-      right += 1;
-      var a = wordsplit.indexOf(guessed[guessed.length - 1]);
-      text[a] = guessed[guessed.length - 1]; //update blanks
+      //correct.push(guessed[guessed.length-1])
+      duplicates();
+      right += 1; //var a = wordsplit.indexOf(guessed[guessed.length-1])
+      //text[a]= guessed[guessed.length-1]//update blanks
+      //document.querySelector("h4").innerText=text.join(' ') //update blanks
+      // document.querySelector("h5").innerText="Used Letters: "+guessed.join(',')
 
-      document.querySelector("h4").innerText = text.join(' '); //update blanks
-
-      document.querySelector("h5").innerText = "Used Letters: " + guessed.join(',');
-
-      if (right === wordsplit.length) {
+      if (text.includes('_') !== true) {
         alert('NICE. You beat the game! Answer: ' + word);
         location.reload();
       } else alert('NICE. Correct Letters: ' + correct);
@@ -175,8 +186,8 @@ y.addEventListener("click", function () {
       }
     }
 
-    alert("You guessed " + document.querySelector('input').value + " USED LETTERS: " + guessed);
-  } else alert("try again");
+    alert("You guessed " + document.querySelector('input').value.toUpperCase() + " USED LETTERS: " + guessed);
+  } else alert("TRY AGAIN");
 }); // alerts and button and game play^^^^
 
 z.addEventListener("click", function () {
@@ -248,7 +259,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59757" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54199" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

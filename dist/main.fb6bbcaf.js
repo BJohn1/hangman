@@ -187,6 +187,7 @@ y.addEventListener("click", function () {
     }
 
     alert("You guessed " + document.querySelector('input').value.toUpperCase() + " USED LETTERS: " + guessed);
+    document.getElementById('input').value = '';
   } else alert("TRY AGAIN");
 }); // alerts and button and game play^^^^
 
@@ -259,7 +260,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54199" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61649" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

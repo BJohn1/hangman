@@ -65,6 +65,7 @@ y.addEventListener("click", function(){
         }
     }
     alert("You guessed "+document.querySelector('input').value.toUpperCase()+" USED LETTERS: "+guessed);
+    document.getElementById('input').value = ''
     }
     else alert("TRY AGAIN")
   });
